@@ -4,8 +4,12 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import vista.paneles.Articulos;
+import vista.paneles.Clientes;
+
 import java.awt.Dimension;
 import java.awt.Cursor;
 import javax.swing.BoxLayout;
@@ -23,6 +27,7 @@ public class UI extends JFrame {
 
 	private JPanel contentPane;
 	private Articulos articulos;
+	private Clientes clientes;
 
 	public UI() {
 		crearFrame();
@@ -31,11 +36,12 @@ public class UI extends JFrame {
 
 	private void crearPaneles() {
 		this.articulos = new Articulos();
+		this.clientes = new Clientes();
 	}
 
 	private void crearFrame() {
 		setTitle("Tienda");
-		setMinimumSize(new Dimension(700, 600));
+		setMinimumSize(new Dimension(1100, 700));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -67,7 +73,7 @@ public class UI extends JFrame {
 		JButton botonClientes = new JButton("Clientes");
 		botonClientes.addActionListener(e -> {
 			panelPrincipal.removeAll();
-			panelPrincipal.add(new JLabel("Clientes"), BorderLayout.CENTER);
+			panelPrincipal.add(this.clientes, BorderLayout.CENTER);
 			contentPane.updateUI();
 		});
 		botonClientes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -95,6 +101,114 @@ public class UI extends JFrame {
 
 	public JPanel getContentPane() {
 		return contentPane;
+	}
+
+	public Clientes getClientes() {
+		return clientes;
+	}
+
+	public JTextField getIdAltaArticulo() {
+		return articulos.getIdAltaArticulo();
+	}
+
+	public JTextField getNombreAltaArticulo() {
+		return articulos.getNombreAltaArticulo();
+	}
+
+	public JTextArea getDescripcionAltaArticulo() {
+		return articulos.getDescripcionAltaArticulo();
+	}
+
+	public JTextField getPrecioAltaArticulo() {
+		return articulos.getPrecioAltaArticulo();
+	}
+
+	public JTextArea getIdBuscarArticulo() {
+		return articulos.getIdBuscarArticulo();
+	}
+
+	public JTextField getNombreBuscarArticulo() {
+		return articulos.getNombreBuscarArticulo();
+	}
+
+	public JTextArea getPrecioBuscarArticulo() {
+		return articulos.getPrecioBuscarArticulo();
+	}
+
+	public JTextArea getDescripcionBuscarArticulo() {
+		return articulos.getDescripcionBuscarArticulo();
+	}
+
+	public JButton getBotonModificarPrecioArticulo() {
+		return articulos.getBotonModificarPrecioArticulo();
+	}
+
+	public JButton getBotonBuscarArticulo() {
+		return articulos.getBotonBuscarArticulo();
+	}
+
+	public JButton getBotonAltaArticulo() {
+		return articulos.getBotonAltaArticulo();
+	}
+
+	public JLabel getMensajeBuscarArticulo() {
+		return articulos.getMensajeBuscarArticulo();
+	}
+
+	public JLabel getMensajeAltaArticulo() {
+		return articulos.getMensajeAltaArticulo();
+	}
+
+	public JTextField getNifAltaCliente() {
+		return clientes.getNifAltaCliente();
+	}
+
+	public JTextField getRazonSocialAltaCliente() {
+		return clientes.getRazonSocialAltaCliente();
+	}
+
+	public JTextField getDireccionAltaCliente() {
+		return clientes.getDireccionAltaCliente();
+	}
+
+	public JTextField getTelefonoAltaCliente() {
+		return clientes.getTelefonoAltaCliente();
+	}
+
+	public JTextArea getCifBuscarCliente() {
+		return clientes.getCifBuscarCliente();
+	}
+
+	public JTextField getRazonSocialBuscarCliente() {
+		return clientes.getRazonSocialBuscarCliente();
+	}
+
+	public JTextField getTeléfonoBuscarCliente() {
+		return clientes.getTeléfonoBuscarCliente();
+	}
+
+	public JTextField getDireccionBuscarCliente() {
+		return clientes.getDireccionBuscarCliente();
+	}
+
+	public JButton getBotonBuscarCliente() {
+		return clientes.getBotonBuscarCliente();
+	}
+
+	public JButton getBotonAltaCliente() {
+		return clientes.getBotonAltaCliente();
+	}
+
+	public JLabel getMensajeBuscarCliente() {
+		return clientes.getMensajeBuscarCliente();
+	}
+
+	public JLabel getMensajeAltaCliente() {
+		return clientes.getMensajeAltaCliente();
+	}
+
+	public JButton getBotonBorrarCliente() {
+		return clientes.getBotonBorrarCliente();
 	}
 
 }
