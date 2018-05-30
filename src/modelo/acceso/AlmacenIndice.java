@@ -1,14 +1,18 @@
 package modelo.acceso;
 
+import java.io.File;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+
+import javax.swing.SwingWorker;
+
 /**
  * 
- * @author jose
- *	Version del 30 de mayo
+ * @author jose Version del 30 de mayo
  * @param <T>
  * @param <K>
  */
+
 public class AlmacenIndice<T, K> {
 	private String pathIndice;
 	private String pathDatos;
@@ -23,6 +27,7 @@ public class AlmacenIndice<T, K> {
 		assert validate();
 		this.indice = new TreeMap<>();
 		dao = new DAO<>();
+		comprobarPath();
 	}
 
 	private boolean validate() {
@@ -30,6 +35,7 @@ public class AlmacenIndice<T, K> {
 	}
 
 	public T obtener(K k) {
+		comprobarPath();
 		assert k != null;
 		indice = (TreeMap<K, Integer>) dao.leer(pathIndice);
 		if (indice == null) {
@@ -45,6 +51,7 @@ public class AlmacenIndice<T, K> {
 	}
 
 	public boolean grabar(T t, K k) {
+		comprobarPath();
 		assert k != null && t != null;
 		boolean retorno = false;
 		// miro el ultimo indice. siempre hay un mapa aqui
@@ -58,11 +65,34 @@ public class AlmacenIndice<T, K> {
 			if (dao.grabar(pathDatos, t, true)) {
 				retorno = true;
 				new DAO<>().grabar(pathIndice, indice);
-			}else{
-				//Si no se graba bien actualizamos el indice con la version grabada
+			} else {
+				// Si no se graba bien actualizamos el indice con la version grabada
 				indice = (TreeMap<K, Integer>) dao.leer(pathIndice);
 			}
 		}
 		return retorno;
+	}
+	
+	private void comprobarPath() {
+		StringBuilder path = new StringBuilder(this.pathDatos);
+		
+		for (int i = path.length() - 1; i > 0; i--) {
+			if(path.charAt(i) == '/') {
+				path.deleteCharAt(i);
+				break;
+			} else {
+				path.deleteCharAt(i);
+			}
+		}
+		
+		crearPath(path.toString());
+	}
+	
+	private void crearPath(String path) {
+		File file = new File(path.toString());
+		
+		if(!file.exists()) {
+			file.mkdirs();
+		}
 	}
 }

@@ -15,11 +15,7 @@ public class ActionAltaCliente implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(this.paraUI.darAltaCliente()) {
-			this.paraUI.getMensajeAltaCliente().setText("Cliente dado de alta correctamente");
-		} else {
-			this.paraUI.getMensajeAltaCliente().setText("Error");
-		}
+		this.paraUI.darAltaCliente();
 	}
 
 }

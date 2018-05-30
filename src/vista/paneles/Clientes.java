@@ -306,6 +306,20 @@ public class Clientes extends JPanel {
 		botonBorrarCliente.setEnabled(false);
 		panel_2.add(botonBorrarCliente);
 	}
+	
+	public void limpiarCamposAlta() {
+		this.nifAltaCliente.setText("");
+		this.razonSocialAltaCliente.setText("");
+		this.direccionAltaCliente.setText("");
+		this.telefonoAltaCliente.setText("");
+	}
+	
+	public void limpiarCamposBusqueda() {
+		this.cifBuscarCliente.setText("");
+		this.razonSocialBuscarCliente.setText("");
+		this.direccionBuscarCliente.setText("");
+		this.teléfonoBuscarCliente.setText("");
+	}
 
 	public JTextField getNifAltaCliente() {
 		return nifAltaCliente;

@@ -10,113 +10,110 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
-//Data Access Object
-
-public class DAO<T> {
-
-	public Object leer(String path) {
+public class DAO <T> {
+	
+	public T leer(String path) {
 		return leer(path, 0);
 	}
 
-	public Object leer(String path, int posicion) {
-		FileInputStream flujoR = abrirFlujoLectura(path);
-		ObjectInputStream adaptadorR = null;
-		Object obj = null;
-		try {
-			if (flujoR != null) {
-				adaptadorR = new ObjectInputStream(flujoR);
-				for (int i = 0; i < posicion; i++) {
-					obj = adaptadorR.readObject();
+	public T leer(String path, int posicion) {
+		assert path != null && posicion >= 0;
+		T t = null;
+		FileInputStream flujoR = abrir(path);
+		if (flujoR != null) {
+			try {
+				ObjectInputStream adaptador = new ObjectInputStream(flujoR);
+				for (int i = 0; i <= posicion; i++) {
+					t = (T) adaptador.readObject();
 				}
-				obj = adaptadorR.readObject();
+			} catch (IOException | ClassNotFoundException e) {
+				e.printStackTrace();
+				t = null;
 			}
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
+			cerrarFlujo(flujoR);
 		}
-		cerrar(flujoR);
-		return obj;
+		return t;
 	}
 
-	public boolean grabar(String path, Object t) {
-		return grabar(path, t, false);
+	public boolean grabar(String path, T t) {
+		return grabar(path,t,false);
 	}
 
-	/**
-	 * 
-	 * @param path
-	 *            :es la ruta del archivo donde se guardara
-	 * @param t
-	 *            : es el objeto a guardar
-	 * @param adicion
-	 *            :false para añadir cabecera, true para no
-	 * @return :false si falla al escribir
-	 */
-	public boolean grabar(String path, Object t, boolean adicion) {
-		File file = new File(path);
+	public boolean grabar(String path, T t,boolean adicion) {
+		assert path != null && t != null;
 		boolean retorno = true;
-		boolean existe = file.exists() && adicion;
-		FileOutputStream flujoW = abrir(path, adicion);
+		File file=new File(path);
+		boolean existe=file.exists()&&adicion;
+		FileOutputStream flujoW = abrir(path,adicion);
 		try {
-			ObjectOutputStream adaptadorW = null;
-			if (!existe) {
-				adaptadorW = new ObjectOutputStream(flujoW);
+			ObjectOutputStream adaptador = null;
+			if (existe) {
+				adaptador = new MyObjectOutputStream(flujoW);
 			} else {
-				adaptadorW = new MyObjectOutputStream(flujoW);
+				adaptador = new ObjectOutputStream(flujoW);
 			}
-			adaptadorW.writeObject(t);
+			adaptador.writeObject(t);
 		} catch (IOException e) {
 			e.printStackTrace();
 			retorno = false;
 		}
-		cerrar(flujoW);
+		boolean cierreFalso = cerrarFlujo(flujoW);
+		if (retorno)
+			retorno = cierreFalso;
 		return retorno;
 	}
 
-	private boolean cerrar(Closeable input) {
-		boolean retorno = true;
+	private FileInputStream abrir(String path) {
+		FileInputStream flujoR = null;
+		File file = new File(path);
 		try {
-			input.close();
-		} catch (IOException e) {
-			retorno = false;
+			if (file.exists()) {
+				flujoR = new FileInputStream(path);
+			}
+		} catch (FileNotFoundException e) {
 		}
-		return retorno;
+		return flujoR;
 	}
 
-	private FileOutputStream abrir(String path, boolean adicion) {
+	private FileOutputStream abrir(String path,boolean adicion) {
+		// no hay assert porque ya habria saltado en el public
 		FileOutputStream flujoW = null;
 		File file = new File(path);
 		try {
-			flujoW = new FileOutputStream(file, adicion);
+			flujoW = new FileOutputStream(file,adicion);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		return flujoW;
-	}
 
-	private FileOutputStream abrir(String path) {
-		return abrir(path, false);
 	}
-
-	private FileInputStream abrirFlujoLectura(String path) {
-		File file = new File(path);
-		FileInputStream flujoR = null;
-		if (file.exists()) {
-			try {
-				flujoR = new FileInputStream(file);
-			} catch (FileNotFoundException e) {
-			}
+	
+	private boolean cerrarFlujo(Closeable closeable) {
+		boolean retorno = true;
+		try {
+			closeable.close();
+		} catch (IOException e) {
+			retorno = false;
 		}
-		return flujoR;
-	}
-}
-
-class MyObjectOutputStream extends ObjectOutputStream {
-
-	public MyObjectOutputStream(OutputStream out) throws IOException {
-		super(out);
+		return retorno;
 	}
 
-	@Override
-	protected void writeStreamHeader() throws IOException {
+	class MyObjectOutputStream extends ObjectOutputStream {
+
+		public MyObjectOutputStream(OutputStream out) throws IOException {
+			// quiero que se quede como esta
+			super(out);
+		}
+
+		@Override
+		protected void writeStreamHeader() throws IOException {
+			// Este es el que escribe la cabecera
+			/*
+			 * La solucion pasa por eliminar la escritura de la cabecera para
+			 * objetos de mi tipo
+			 */
+			// super.writeStreamHeader();
+//			System.out.println("soy la otra");
+		}
 	}
 }
