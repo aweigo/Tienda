@@ -211,4 +211,12 @@ public class UI extends JFrame {
 		return clientes.getBotonBorrarCliente();
 	}
 
+	public void limpiarCamposAltaCliente() {
+		clientes.limpiarCamposAlta();
+	}
+
+	public void limpiarCamposBusquedaCliente() {
+		clientes.limpiarCamposBusqueda();
+	}
+
 }
