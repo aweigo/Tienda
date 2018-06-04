@@ -52,8 +52,9 @@ public class ValidatorTest {
 	@Test
 	public void testIsNombre() {
 		assertTrue(Validator.isNombre("Sergio"));
-		assertTrue(Validator.isNombre("Sergio Galan    "));
 		assertFalse(Validator.isNombre("Sergio5845"));
+		assertTrue(Validator.isNombre("Sergio Galan    "));
+		
 	}
 	
 	@Test
@@ -78,6 +79,7 @@ public class ValidatorTest {
 		assertTrue(Validator.isWord("abc"));
 		assertFalse(Validator.isWord("14"));
 		assertFalse(Validator.isWord("nsjs78"));
+		assertFalse(Validator.isWord("hol/"));
 	}
 	
 	
