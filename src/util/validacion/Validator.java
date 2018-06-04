@@ -27,7 +27,7 @@ public class Validator {
 	}
 	
 	public static boolean isPrecio(String string) {
-		return  comprobarEspacios(string) && Pattern.matches("\\d{1,10000000}(\\.\\d{0,2})?", string);
+		return comprobarEspacios(string) && Pattern.matches("\\d{1,10000000}(\\.\\d{0,2})?", string);
 	}
 	
 	public static boolean isNIF(String string) {
@@ -47,7 +47,7 @@ public class Validator {
 	}
 	
 	public static boolean isWord(String string) {
-		return !Pattern.matches(".*[0-9].*",string) && Pattern.matches(".*[a-zA-Z].*",string);
+		return Pattern.matches("[a-zA-Z\\s]+",string);
 	}
 	
 	public static boolean comprobarEspacios(String string) {
