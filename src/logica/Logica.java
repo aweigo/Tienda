@@ -1,5 +1,6 @@
 package logica;
 
+import modelo.data.Articulo;
 import modelo.data.Cliente;
 import modelo.data.Datos;
 
@@ -19,4 +20,7 @@ public class Logica {
 		return this.datos.buscarCliente(razonSocial);
 	}
 
+	public boolean darAltaArticulo(int idArticulo, String nombre, String descripcion, float precio) {
+		return this.datos.darAlta(new Articulo(idArticulo, nombre, descripcion, precio));
+	}
 }

@@ -219,4 +219,10 @@ public class UI extends JFrame {
 		clientes.limpiarCamposBusqueda();
 	}
 
+	public void limpiarCamposAltaArticulo() {
+		articulos.limpiarCamposAltaArticulo();
+	}
+	
+	
+
 }

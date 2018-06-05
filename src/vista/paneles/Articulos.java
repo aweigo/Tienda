@@ -311,6 +311,13 @@ public class Articulos extends JPanel {
 		JLabel lblPendiente = new JLabel("En proceso...");
 		consultarPrecio.add(lblPendiente, BorderLayout.NORTH);
 	}
+	
+	public void limpiarCamposAltaArticulo() {
+		this.idAltaArticulo.setText("");
+		this.nombreAltaArticulo.setText("");
+		this.descripcionAltaArticulo.setText("");
+		this.precioAltaArticulo.setText("");
+	}
 
 	public JTextField getIdAltaArticulo() {
 		return idAltaArticulo;

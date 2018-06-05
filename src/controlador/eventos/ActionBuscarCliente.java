@@ -1,7 +1,9 @@
-package controlador;
+package controlador.eventos;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import controlador.ParaUI;
 
 public class ActionBuscarCliente implements ActionListener {
 	

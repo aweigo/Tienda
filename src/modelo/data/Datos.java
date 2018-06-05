@@ -17,4 +17,10 @@ public class Datos {
 	public Cliente buscarCliente(String razonSocial) {
 		return this.almacenCliente.obtener(razonSocial);
 	}
+	
+	public boolean darAlta(Articulo articulo) {
+		String pathDatos = "data/articulos/" + articulo.getIdArticulo() + ".art";
+		
+		return new AlmacenIndice<>("data/articulos/articulo.dat", pathDatos).grabar(articulo, articulo.getNombre());
+	}
 }
