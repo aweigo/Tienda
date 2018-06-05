@@ -1,7 +1,10 @@
 package controlador;
 
+import controlador.acciones.AccionesArticulo;
 import controlador.acciones.AccionesCliente;
+import controlador.eventos.ActionAltaArticulo;
 import controlador.eventos.ActionAltaCliente;
+import controlador.eventos.ActionBuscarCliente;
 import logica.Logica;
 import modelo.data.Cliente;
 import vista.UI;
@@ -16,16 +19,19 @@ public class ParaUI extends UI {
 
 	private Logica logica;
 	private AccionesCliente accionesCliente;
+	private AccionesArticulo accionesArticulo;
 	
 	public ParaUI() {
 		this.logica = new Logica();
 		this.accionesCliente = new AccionesCliente(this);
-		establecerActionAltaCliente();
+		this.accionesArticulo = new AccionesArticulo(this);
+		establecerEventos();
 	}
 	
-	public void establecerActionAltaCliente() {
+	public void establecerEventos() {
 		getBotonAltaCliente().addActionListener(new ActionAltaCliente(this));
 		getBotonBuscarCliente().addActionListener(new ActionBuscarCliente(this));
+		getBotonAltaArticulo().addActionListener(new ActionAltaArticulo(this));
 	}
 
 	public void darAltaCliente() {
@@ -42,6 +48,14 @@ public class ParaUI extends UI {
 
 	public void buscarCliente() {
 		accionesCliente.buscar();
+	}
+
+	public boolean darAltaArticulo(int idArticulo, String nombre, String descripcion, float precio) {
+		return logica.darAltaArticulo(idArticulo, nombre, descripcion, precio);
+	}
+
+	public void darAltaArticulo() {
+		accionesArticulo.darAlta();
 	}
 
 }
