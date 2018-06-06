@@ -34,12 +34,17 @@ public class AccionesCliente {
 		if ((Validator.isNIF(NIF) || Validator.isCIF(NIF)) && Validator.isNombre(razonSocial)
 				&& Validator.isNombre(direccion) && Validator.isPhone(telefono)) {
 
-			if (this.paraUI.darAltaCliente(NIF, razonSocial, direccion, telefono)) {
-				this.paraUI.getMensajeAltaCliente().setText("Cliente dado de alta correctamente");
-				this.paraUI.limpiarCamposAltaCliente();
-				worker.execute();
+			if (this.paraUI.comprobarClienteExistente(razonSocial)) {
+				if (this.paraUI.darAltaCliente(NIF, razonSocial, direccion, telefono)) {
+					this.paraUI.getMensajeAltaCliente().setText("Cliente dado de alta correctamente");
+					this.paraUI.limpiarCamposAltaCliente();
+					worker.execute();
+				} else {
+					this.paraUI.getMensajeAltaCliente().setText("Error al dar de alta el cliente");
+					worker.execute();
+				}
 			} else {
-				this.paraUI.getMensajeAltaCliente().setText("Error al dar de alta el cliente");
+				this.paraUI.getMensajeAltaCliente().setText("Error al dar de alta el cliente. Cliente existente");
 				worker.execute();
 			}
 		}
@@ -73,5 +78,29 @@ public class AccionesCliente {
 				worker.execute();
 			}
 		}
+	}
+
+	public void borrar() {
+		final SwingWorker worker = new SwingWorker() {
+
+			@Override
+			protected Object doInBackground() throws Exception {
+				Thread.sleep(1500);
+				paraUI.getMensajeBuscarCliente().setText("");
+				return null;
+			}
+		};
+
+		if (this.paraUI.borrarCliente(paraUI.getRazonSocialBuscarCliente().getText())) {
+			this.paraUI.getMensajeBuscarCliente().setText("Cliente eliminado correctamente");
+			paraUI.limpiarCamposBusquedaCliente();
+			paraUI.getBotonBorrarCliente().setEnabled(false);
+
+			worker.execute();
+		} else {
+			this.paraUI.getMensajeBuscarCliente().setText("Error al eliminar el cliente");
+			worker.execute();
+		}
+
 	}
 }

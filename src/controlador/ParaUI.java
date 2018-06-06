@@ -4,6 +4,7 @@ import controlador.acciones.AccionesArticulo;
 import controlador.acciones.AccionesCliente;
 import controlador.eventos.ActionAltaArticulo;
 import controlador.eventos.ActionAltaCliente;
+import controlador.eventos.ActionBorrarCliente;
 import controlador.eventos.ActionBuscarCliente;
 import logica.Logica;
 import modelo.data.Cliente;
@@ -32,6 +33,7 @@ public class ParaUI extends UI {
 		getBotonAltaCliente().addActionListener(new ActionAltaCliente(this));
 		getBotonBuscarCliente().addActionListener(new ActionBuscarCliente(this));
 		getBotonAltaArticulo().addActionListener(new ActionAltaArticulo(this));
+		getBotonBorrarCliente().addActionListener(new ActionBorrarCliente(this));
 	}
 
 	public void darAltaCliente() {
@@ -48,6 +50,18 @@ public class ParaUI extends UI {
 
 	public void buscarCliente() {
 		accionesCliente.buscar();
+	}
+	
+	public boolean borrarCliente(String CIF) {
+		return logica.borrarCliente(CIF);
+	}
+
+	public void borrar() {
+		accionesCliente.borrar();
+	}
+	
+	public boolean comprobarClienteExistente(String razonSocial) {
+		return logica.comprobarClienteExistente(razonSocial);
 	}
 
 	public boolean darAltaArticulo(int idArticulo, String nombre, String descripcion, float precio) {

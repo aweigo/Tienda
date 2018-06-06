@@ -19,6 +19,14 @@ public class Logica {
 	public Cliente buscarCliente(String razonSocial) {
 		return this.datos.buscarCliente(razonSocial);
 	}
+	
+	public boolean borrarCliente(String CIF) {
+		return this.datos.borrarCliente(CIF);
+	}
+	
+	public boolean comprobarClienteExistente(String razonSocial) {
+		return this.datos.comprobarClienteExistente(razonSocial);
+	}
 
 	public boolean darAltaArticulo(int idArticulo, String nombre, String descripcion, float precio) {
 		return this.datos.darAlta(new Articulo(idArticulo, nombre, descripcion, precio));

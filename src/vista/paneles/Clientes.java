@@ -300,6 +300,7 @@ public class Clientes extends JPanel {
 		botonBuscarCliente.setBorder(new EmptyBorder(10, 0, 10, 0));
 		
 		botonBorrarCliente = new JButton("Borrar Cliente");
+		botonBorrarCliente.setFocusPainted(false);
 		botonBorrarCliente.setBackground(new Color(176, 196, 222));
 		botonBorrarCliente.setBorder(new EmptyBorder(10, 0, 10, 0));
 		botonBorrarCliente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

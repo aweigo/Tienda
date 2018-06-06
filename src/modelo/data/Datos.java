@@ -18,6 +18,14 @@ public class Datos {
 		return this.almacenCliente.obtener(razonSocial);
 	}
 	
+	public boolean borrarCliente(String CIF) {
+		return this.almacenCliente.borrar(CIF);
+	}
+	
+	public boolean comprobarClienteExistente(String razonSocial) {
+		return this.almacenCliente.obtener(razonSocial) == null;
+	}
+	
 	public boolean darAlta(Articulo articulo) {
 		String pathDatos = "data/articulos/" + articulo.getIdArticulo() + ".art";
 		
