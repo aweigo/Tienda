@@ -160,7 +160,7 @@ public class Articulos extends JPanel {
 		mensajeAltaArticulo.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(mensajeAltaArticulo, BorderLayout.NORTH);
 		
-		botonAltaArticulo = new JButton("Alta");
+		botonAltaArticulo = new JButton("Alta art\u00EDculo");
 		panel.add(botonAltaArticulo);
 		botonAltaArticulo.setFocusPainted(false);
 		botonAltaArticulo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -297,7 +297,7 @@ public class Articulos extends JPanel {
 		mensajeBuscarArticulo.setBorder(new EmptyBorder(5, 0, 5, 0));
 		panel_1.add(mensajeBuscarArticulo, BorderLayout.NORTH);
 		
-		botonBuscarArticulo = new JButton("Buscar");
+		botonBuscarArticulo = new JButton("Buscar art\u00EDculo");
 		panel_1.add(botonBuscarArticulo, BorderLayout.SOUTH);
 		botonBuscarArticulo.setFocusPainted(false);
 		botonBuscarArticulo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
