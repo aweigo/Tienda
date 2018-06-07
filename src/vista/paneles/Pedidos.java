@@ -1,11 +1,14 @@
 package vista.paneles;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -16,6 +19,8 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Cursor;
 import java.awt.GridLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 /**
  * 
@@ -25,18 +30,16 @@ import java.awt.GridLayout;
 
 public class Pedidos extends JPanel {
 
-	protected JTextField nifAltaCliente;
-	protected JTextField razonSocialAltaCliente;
-	protected JTextField direccionAltaCliente;
-	protected JTextField telefonoAltaCliente;
-	protected JTextArea cifBuscarCliente;
-	protected JTextField razonSocialBuscarCliente;
-	protected JTextField teléfonoBuscarCliente;
-	protected JTextField direccionBuscarCliente;
-	protected JButton botonConsultarPedido;
+	protected JTextField idAltaPedido;
 	protected JButton botonAltaPedido;
 	protected JLabel mensajeConsultarPedido;
 	protected JLabel mensajeAltaPedido;
+	private JTextField buscadorArticuloAlta;
+	private JTextField buscadorClienteAlta;
+	private JTable tablaLineasPedido;
+	private JLabel totalPedido;
+	private JTable tablaArticulos;
+	private JTable tablaClientes;
 
 	public Pedidos() {
 		setLayout(new BorderLayout(0, 0));
@@ -60,96 +63,148 @@ public class Pedidos extends JPanel {
 		JPanel panelCamposAltaPedido = new JPanel();
 		panelCamposAltaPedido.setBorder(new EmptyBorder(5, 5, 15, 5));
 		altaPedido.add(panelCamposAltaPedido, BorderLayout.CENTER);
-		GridBagLayout gbl_panelCamposAltaPedido = new GridBagLayout();
-		gbl_panelCamposAltaPedido.columnWidths = new int[]{634, 0};
-		gbl_panelCamposAltaPedido.rowHeights = new int[] {60, 60, 60, 60, 0};
-		gbl_panelCamposAltaPedido.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panelCamposAltaPedido.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panelCamposAltaPedido.setLayout(gbl_panelCamposAltaPedido);
+		panelCamposAltaPedido.setLayout(new BorderLayout(0, 5));
 		
-		JPanel panelNifAltaCliente = new JPanel();
-		panelNifAltaCliente.setBorder(new EmptyBorder(2, 10, 2, 10));
-		panelNifAltaCliente.setLayout(new BorderLayout(0, 0));
+		JPanel panelIdAltaPedido = new JPanel();
+		panelIdAltaPedido.setBorder(new EmptyBorder(2, 10, 2, 10));
+		panelIdAltaPedido.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblNewLabel_1 = new JLabel("NIF-CIF");
-		lblNewLabel_1.setBorder(new EmptyBorder(5, 0, 5, 0));
+		JLabel lblNewLabel_1 = new JLabel("ID");
+		lblNewLabel_1.setBorder(null);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panelNifAltaCliente.add(lblNewLabel_1, BorderLayout.NORTH);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 10));
+		panelIdAltaPedido.add(lblNewLabel_1, BorderLayout.NORTH);
 		
-		nifAltaCliente = new JTextField();
-		nifAltaCliente.setDisabledTextColor(new Color(0, 0, 0));
-		nifAltaCliente.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panelNifAltaCliente.add(nifAltaCliente);
-		nifAltaCliente.setColumns(10);
-		GridBagConstraints gbc_panelNifAltaCliente = new GridBagConstraints();
-		gbc_panelNifAltaCliente.fill = GridBagConstraints.BOTH;
-		gbc_panelNifAltaCliente.insets = new Insets(0, 0, 5, 0);
-		gbc_panelNifAltaCliente.gridx = 0;
-		gbc_panelNifAltaCliente.gridy = 0;
-		panelCamposAltaPedido.add(panelNifAltaCliente, gbc_panelNifAltaCliente);
+		idAltaPedido = new JTextField();
+		idAltaPedido.setFont(new Font("Tahoma", Font.ITALIC, 9));
+		idAltaPedido.setBackground(new Color(211, 211, 211));
+		idAltaPedido.setEditable(false);
+		idAltaPedido.setEnabled(false);
+		idAltaPedido.setDisabledTextColor(new Color(0, 0, 0));
+		idAltaPedido.setBorder(new EmptyBorder(3, 3, 3, 3));
+		panelIdAltaPedido.add(idAltaPedido, BorderLayout.WEST);
+		idAltaPedido.setColumns(10);
+		panelCamposAltaPedido.add(panelIdAltaPedido, BorderLayout.NORTH);
 		
-		JPanel panelRazonSocialAltaCliente = new JPanel();
-		panelRazonSocialAltaCliente.setBorder(new EmptyBorder(2, 10, 2, 10));
-		panelRazonSocialAltaCliente.setLayout(new BorderLayout(0, 0));
+		String nombreColumnasArticulos[] = {"Nombre"};
 		
-		JLabel lblNombre = new JLabel("Raz\u00F3n Social");
-		lblNombre.setBorder(new EmptyBorder(5, 0, 5, 0));
-		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panelRazonSocialAltaCliente.add(lblNombre, BorderLayout.NORTH);
+		JPanel panel5 = new JPanel();
+		panelCamposAltaPedido.add(panel5, BorderLayout.CENTER);
 		
-		razonSocialAltaCliente = new JTextField();
-		razonSocialAltaCliente.setBorder(new EmptyBorder(5, 5, 5, 5));
-		razonSocialAltaCliente.setColumns(10);
-		panelRazonSocialAltaCliente.add(razonSocialAltaCliente);
-		GridBagConstraints gbc_panelRazonSocialAltaCliente = new GridBagConstraints();
-		gbc_panelRazonSocialAltaCliente.fill = GridBagConstraints.BOTH;
-		gbc_panelRazonSocialAltaCliente.insets = new Insets(0, 0, 5, 0);
-		gbc_panelRazonSocialAltaCliente.gridx = 0;
-		gbc_panelRazonSocialAltaCliente.gridy = 1;
-		panelCamposAltaPedido.add(panelRazonSocialAltaCliente, gbc_panelRazonSocialAltaCliente);
+		JPanel panelArticulosAltaPedido = new JPanel();
+		panelArticulosAltaPedido.setBorder(new EmptyBorder(2, 10, 2, 10));
+		panelArticulosAltaPedido.setLayout(new BorderLayout(0, 3));
+		tablaArticulos = new JTable(new DefaultTableModel(null, nombreColumnasArticulos));
+		tablaArticulos.setFillsViewportHeight(true);
 		
-		JPanel panelDireccionAltaCliente = new JPanel();
-		panelDireccionAltaCliente.setBorder(new EmptyBorder(2, 10, 2, 10));
-		panelDireccionAltaCliente.setLayout(new BorderLayout(0, 0));
+		JScrollPane scrollPaneArticulos = new JScrollPane(tablaArticulos);
+		scrollPaneArticulos.setViewportBorder(null);
+		scrollPaneArticulos.setBorder(null);
+		panelArticulosAltaPedido.add(scrollPaneArticulos, BorderLayout.CENTER);
 		
-		JLabel lblDescripcion = new JLabel("Direcci\u00F3n");
-		lblDescripcion.setBorder(new EmptyBorder(5, 0, 5, 0));
-		lblDescripcion.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panelDireccionAltaCliente.add(lblDescripcion, BorderLayout.NORTH);
+		JPanel panel_3 = new JPanel();
+		panelArticulosAltaPedido.add(panel_3, BorderLayout.NORTH);
+		panel_3.setLayout(new BorderLayout(0, 0));
 		
-		direccionAltaCliente = new JTextField();
-		direccionAltaCliente.setColumns(10);
-		direccionAltaCliente.setDisabledTextColor(new Color(0, 0, 0));
-		direccionAltaCliente.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panelDireccionAltaCliente.add(direccionAltaCliente);
-		GridBagConstraints gbc_panelDireccionAltaCliente = new GridBagConstraints();
-		gbc_panelDireccionAltaCliente.fill = GridBagConstraints.BOTH;
-		gbc_panelDireccionAltaCliente.insets = new Insets(0, 0, 5, 0);
-		gbc_panelDireccionAltaCliente.gridx = 0;
-		gbc_panelDireccionAltaCliente.gridy = 2;
-		panelCamposAltaPedido.add(panelDireccionAltaCliente, gbc_panelDireccionAltaCliente);
+		JLabel lblNewLabel_2 = new JLabel("Introduzca el nombre del art\u00EDculo");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblNewLabel_2.setBorder(new EmptyBorder(2, 0, 2, 0));
+		panel_3.add(lblNewLabel_2, BorderLayout.CENTER);
 		
-		JPanel panelTelefonoAltaCliente = new JPanel();
-		panelTelefonoAltaCliente.setBorder(new EmptyBorder(2, 10, 2, 10));
-		panelTelefonoAltaCliente.setLayout(new BorderLayout(0, 0));
+		buscadorArticuloAlta = new JTextField();
+		panel_3.add(buscadorArticuloAlta, BorderLayout.SOUTH);
+		buscadorArticuloAlta.setBorder(new EmptyBorder(5, 5, 5, 5));
+		buscadorArticuloAlta.setColumns(10);
 		
-		JLabel lblPrecio = new JLabel("Tel\u00E9fono");
-		lblPrecio.setBorder(new EmptyBorder(5, 0, 5, 0));
-		lblPrecio.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panelTelefonoAltaCliente.add(lblPrecio, BorderLayout.NORTH);
+		JLabel lblArtculos = new JLabel("Art\u00EDculos");
+		lblArtculos.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+		panel_3.add(lblArtculos, BorderLayout.NORTH);
 		
-		telefonoAltaCliente = new JTextField();
-		telefonoAltaCliente.setColumns(10);
-		telefonoAltaCliente.setDisabledTextColor(new Color(0, 0, 0));
-		telefonoAltaCliente.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panelTelefonoAltaCliente.add(telefonoAltaCliente);
-		GridBagConstraints gbc_panelTelefonoAltaCliente = new GridBagConstraints();
-		gbc_panelTelefonoAltaCliente.insets = new Insets(0, 0, 5, 0);
-		gbc_panelTelefonoAltaCliente.fill = GridBagConstraints.BOTH;
-		gbc_panelTelefonoAltaCliente.gridx = 0;
-		gbc_panelTelefonoAltaCliente.gridy = 3;
-		panelCamposAltaPedido.add(panelTelefonoAltaCliente, gbc_panelTelefonoAltaCliente);
+		JPanel panelClientesAltaPedido = new JPanel();
+		panelClientesAltaPedido.setBorder(new EmptyBorder(2, 10, 2, 10));
+		panelClientesAltaPedido.setLayout(new BorderLayout(0, 3));
+		
+		String nombreColumnasClientes[] = {"Nombre"};
+		
+		tablaClientes = new JTable(new DefaultTableModel(null, nombreColumnasClientes));
+		tablaClientes.setFillsViewportHeight(true);
+		
+		JScrollPane scrollPaneClientes = new JScrollPane(tablaClientes);
+		scrollPaneClientes.setViewportBorder(null);
+		scrollPaneClientes.setBorder(null);
+		panelClientesAltaPedido.add(scrollPaneClientes, BorderLayout.CENTER);
+		
+		JPanel panel_4 = new JPanel();
+		panelClientesAltaPedido.add(panel_4, BorderLayout.NORTH);
+		panel_4.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblNewLabel_3 = new JLabel("Introduzca el nombre del cliente");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblNewLabel_3.setBorder(new EmptyBorder(2, 0, 2, 0));
+		panel_4.add(lblNewLabel_3, BorderLayout.CENTER);
+		
+		buscadorClienteAlta = new JTextField();
+		buscadorClienteAlta.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel_4.add(buscadorClienteAlta, BorderLayout.SOUTH);
+		buscadorClienteAlta.setColumns(10);
+		
+		JLabel Clientes = new JLabel("Clientes");
+		Clientes.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+		panel_4.add(Clientes, BorderLayout.NORTH);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBorder(new EmptyBorder(2, 10, 2, 10));
+		
+		String nombreColumnasLineasPedido[] = {"Nombre artículo", "Cantidad"};
+		panel_5.setLayout(new BorderLayout(0, 3));
+		
+		JLabel lblLneas = new JLabel("L\u00EDneas de pedido");
+		lblLneas.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+		panel_5.add(lblLneas, BorderLayout.NORTH);
+		
+		tablaLineasPedido = new JTable(new DefaultTableModel(null, nombreColumnasLineasPedido));
+		tablaLineasPedido.setFillsViewportHeight(true);
+		
+		JScrollPane scrollPaneLineasPedido = new JScrollPane(tablaLineasPedido);
+		scrollPaneLineasPedido.setViewportBorder(null);
+		panel_5.add(scrollPaneLineasPedido, BorderLayout.CENTER);
+		scrollPaneLineasPedido.setBorder(null);
+		GroupLayout gl_panel5 = new GroupLayout(panel5);
+		gl_panel5.setHorizontalGroup(
+			gl_panel5.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel5.createSequentialGroup()
+					.addComponent(panelArticulosAltaPedido, GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+					.addGap(5)
+					.addComponent(panelClientesAltaPedido, GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE))
+				.addGroup(gl_panel5.createSequentialGroup()
+					.addComponent(panel_5, GroupLayout.DEFAULT_SIZE, 1085, Short.MAX_VALUE)
+					.addGap(1))
+		);
+		gl_panel5.setVerticalGroup(
+			gl_panel5.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel5.createSequentialGroup()
+					.addGroup(gl_panel5.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelArticulosAltaPedido, GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+						.addComponent(panelClientesAltaPedido, GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
+					.addGap(5)
+					.addComponent(panel_5, GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+					.addGap(1))
+		);
+		panel5.setLayout(gl_panel5);
+		
+		JPanel panel_6 = new JPanel();
+		panel_6.setBackground(new Color(240, 255, 240));
+		panel_6.setBorder(new EmptyBorder(5, 10, 5, 10));
+		panelCamposAltaPedido.add(panel_6, BorderLayout.SOUTH);
+		panel_6.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblTotal = new JLabel("Total");
+		lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_6.add(lblTotal, BorderLayout.NORTH);
+		
+		totalPedido = new JLabel("");
+		totalPedido.setFont(new Font("Tahoma", Font.BOLD, 20));
+		panel_6.add(totalPedido, BorderLayout.SOUTH);
 		
 		JPanel panel = new JPanel();
 		altaPedido.add(panel, BorderLayout.SOUTH);
@@ -161,7 +216,7 @@ public class Pedidos extends JPanel {
 		mensajeAltaPedido.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(mensajeAltaPedido, BorderLayout.NORTH);
 		
-		botonAltaPedido = new JButton("Alta");
+		botonAltaPedido = new JButton("Alta pedido");
 		panel.add(botonAltaPedido);
 		botonAltaPedido.setFocusPainted(false);
 		botonAltaPedido.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -172,181 +227,18 @@ public class Pedidos extends JPanel {
 		tabbedPane.addTab("Consultar", null, consultarPedido, null);
 		consultarPedido.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelCamposConsultarPedido = new JPanel();
-		panelCamposConsultarPedido.setBorder(new EmptyBorder(5, 5, 15, 5));
-		consultarPedido.add(panelCamposConsultarPedido, BorderLayout.CENTER);
-		GridBagLayout gbl_panelCamposConsultarPedido = new GridBagLayout();
-		gbl_panelCamposConsultarPedido.columnWidths = new int[]{634, 0};
-		gbl_panelCamposConsultarPedido.rowHeights = new int[] {60, 60, 60, 60, 0};
-		gbl_panelCamposConsultarPedido.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panelCamposConsultarPedido.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panelCamposConsultarPedido.setLayout(gbl_panelCamposConsultarPedido);
-		
-		JPanel panelNifBuscarCliente = new JPanel();
-		panelNifBuscarCliente.setBorder(new EmptyBorder(2, 10, 2, 10));
-		GridBagConstraints gbc_panelNifBuscarCliente = new GridBagConstraints();
-		gbc_panelNifBuscarCliente.fill = GridBagConstraints.BOTH;
-		gbc_panelNifBuscarCliente.insets = new Insets(0, 0, 5, 0);
-		gbc_panelNifBuscarCliente.gridx = 0;
-		gbc_panelNifBuscarCliente.gridy = 0;
-		panelCamposConsultarPedido.add(panelNifBuscarCliente, gbc_panelNifBuscarCliente);
-		panelNifBuscarCliente.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNifcif = new JLabel("NIF-CIF");
-		lblNifcif.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNifcif.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNifcif.setBorder(new EmptyBorder(5, 0, 5, 0));
-		panelNifBuscarCliente.add(lblNifcif, BorderLayout.NORTH);
-		
-		cifBuscarCliente = new JTextArea();
-		cifBuscarCliente.setFont(new Font("Monospaced", Font.PLAIN, 11));
-		cifBuscarCliente.setDisabledTextColor(new Color(0, 0, 0));
-		cifBuscarCliente.setBackground(new Color(211, 211, 211));
-		cifBuscarCliente.setEditable(false);
-		cifBuscarCliente.setEnabled(false);
-		cifBuscarCliente.setColumns(10);
-		cifBuscarCliente.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panelNifBuscarCliente.add(cifBuscarCliente, BorderLayout.CENTER);
-		
-		JPanel panelRazonSocialBuscarCliente = new JPanel();
-		panelRazonSocialBuscarCliente.setBorder(new EmptyBorder(2, 10, 2, 10));
-		GridBagConstraints gbc_panelRazonSocialBuscarCliente = new GridBagConstraints();
-		gbc_panelRazonSocialBuscarCliente.fill = GridBagConstraints.BOTH;
-		gbc_panelRazonSocialBuscarCliente.insets = new Insets(0, 0, 5, 0);
-		gbc_panelRazonSocialBuscarCliente.gridx = 0;
-		gbc_panelRazonSocialBuscarCliente.gridy = 1;
-		panelCamposConsultarPedido.add(panelRazonSocialBuscarCliente, gbc_panelRazonSocialBuscarCliente);
-		panelRazonSocialBuscarCliente.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblRaznSocial = new JLabel("Raz\u00F3n Social");
-		lblRaznSocial.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblRaznSocial.setBorder(new EmptyBorder(5, 0, 5, 0));
-		panelRazonSocialBuscarCliente.add(lblRaznSocial, BorderLayout.NORTH);
-		
-		razonSocialBuscarCliente = new JTextField();
-		razonSocialBuscarCliente.setColumns(10);
-		razonSocialBuscarCliente.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panelRazonSocialBuscarCliente.add(razonSocialBuscarCliente, BorderLayout.CENTER);
-		
-		JPanel panelDireccionBuscarCliente = new JPanel();
-		panelDireccionBuscarCliente.setBorder(new EmptyBorder(2, 10, 2, 10));
-		GridBagConstraints gbc_panelDireccionBuscarCliente = new GridBagConstraints();
-		gbc_panelDireccionBuscarCliente.fill = GridBagConstraints.BOTH;
-		gbc_panelDireccionBuscarCliente.insets = new Insets(0, 0, 5, 0);
-		gbc_panelDireccionBuscarCliente.gridx = 0;
-		gbc_panelDireccionBuscarCliente.gridy = 2;
-		panelCamposConsultarPedido.add(panelDireccionBuscarCliente, gbc_panelDireccionBuscarCliente);
-		panelDireccionBuscarCliente.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblDireccin = new JLabel("Direcci\u00F3n");
-		lblDireccin.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblDireccin.setBorder(new EmptyBorder(5, 0, 5, 0));
-		panelDireccionBuscarCliente.add(lblDireccin, BorderLayout.NORTH);
-		
-		direccionBuscarCliente = new JTextField();
-		panelDireccionBuscarCliente.add(direccionBuscarCliente, BorderLayout.CENTER);
-		direccionBuscarCliente.setDisabledTextColor(new Color(0, 0, 0));
-		direccionBuscarCliente.setBackground(new Color(211, 211, 211));
-		direccionBuscarCliente.setEditable(false);
-		direccionBuscarCliente.setEnabled(false);
-		direccionBuscarCliente.setFont(new Font("Monospaced", Font.PLAIN, 11));
-		direccionBuscarCliente.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		JPanel panelTelefonoBuscarCliente = new JPanel();
-		panelTelefonoBuscarCliente.setBorder(new EmptyBorder(2, 10, 2, 10));
-		GridBagConstraints gbc_panelTelefonoBuscarCliente = new GridBagConstraints();
-		gbc_panelTelefonoBuscarCliente.insets = new Insets(0, 0, 5, 0);
-		gbc_panelTelefonoBuscarCliente.fill = GridBagConstraints.BOTH;
-		gbc_panelTelefonoBuscarCliente.gridx = 0;
-		gbc_panelTelefonoBuscarCliente.gridy = 3;
-		panelCamposConsultarPedido.add(panelTelefonoBuscarCliente, gbc_panelTelefonoBuscarCliente);
-		panelTelefonoBuscarCliente.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblTelfono = new JLabel("Tel\u00E9fono");
-		lblTelfono.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblTelfono.setBorder(new EmptyBorder(5, 0, 5, 0));
-		panelTelefonoBuscarCliente.add(lblTelfono, BorderLayout.NORTH);
-		
-		teléfonoBuscarCliente = new JTextField();
-		teléfonoBuscarCliente.setBackground(new Color(211, 211, 211));
-		teléfonoBuscarCliente.setDisabledTextColor(new Color(0, 0, 0));
-		teléfonoBuscarCliente.setFont(new Font("Monospaced", Font.PLAIN, 11));
-		teléfonoBuscarCliente.setEditable(false);
-		teléfonoBuscarCliente.setEnabled(false);
-		teléfonoBuscarCliente.setColumns(10);
-		teléfonoBuscarCliente.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panelTelefonoBuscarCliente.add(teléfonoBuscarCliente, BorderLayout.CENTER);
-		
-		JPanel panel_1 = new JPanel();
-		consultarPedido.add(panel_1, BorderLayout.SOUTH);
-		panel_1.setLayout(new BorderLayout(0, 0));
-		
 		mensajeConsultarPedido = new JLabel("");
+		consultarPedido.add(mensajeConsultarPedido, BorderLayout.SOUTH);
 		mensajeConsultarPedido.setHorizontalAlignment(SwingConstants.CENTER);
 		mensajeConsultarPedido.setFont(new Font("Tahoma", Font.BOLD, 12));
 		mensajeConsultarPedido.setBorder(new EmptyBorder(5, 0, 5, 0));
-		panel_1.add(mensajeConsultarPedido, BorderLayout.NORTH);
 		
-		JPanel panel_2 = new JPanel();
-		panel_1.add(panel_2, BorderLayout.CENTER);
-		panel_2.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		botonConsultarPedido = new JButton("Consultar");
-		panel_2.add(botonConsultarPedido);
-		botonConsultarPedido.setFocusPainted(false);
-		botonConsultarPedido.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		botonConsultarPedido.setBackground(new Color(176, 196, 222));
-		botonConsultarPedido.setBorder(new EmptyBorder(10, 0, 10, 0));
-	}
-	
-	public void limpiarCamposAlta() {
-		this.nifAltaCliente.setText("");
-		this.razonSocialAltaCliente.setText("");
-		this.direccionAltaCliente.setText("");
-		this.telefonoAltaCliente.setText("");
-	}
-	
-	public void limpiarCamposBusqueda() {
-		this.cifBuscarCliente.setText("");
-		this.razonSocialBuscarCliente.setText("");
-		this.direccionBuscarCliente.setText("");
-		this.teléfonoBuscarCliente.setText("");
+		JLabel lblEnProceso = new JLabel("En proceso...");
+		consultarPedido.add(lblEnProceso, BorderLayout.NORTH);
 	}
 
 	public JTextField getNifAltaCliente() {
-		return nifAltaCliente;
-	}
-
-	public JTextField getRazonSocialAltaCliente() {
-		return razonSocialAltaCliente;
-	}
-
-	public JTextField getDireccionAltaCliente() {
-		return direccionAltaCliente;
-	}
-
-	public JTextField getTelefonoAltaCliente() {
-		return telefonoAltaCliente;
-	}
-
-	public JTextArea getCifBuscarCliente() {
-		return cifBuscarCliente;
-	}
-
-	public JTextField getRazonSocialBuscarCliente() {
-		return razonSocialBuscarCliente;
-	}
-
-	public JTextField getTeléfonoBuscarCliente() {
-		return teléfonoBuscarCliente;
-	}
-
-	public JTextField getDireccionBuscarCliente() {
-		return direccionBuscarCliente;
-	}
-
-	public JButton getBotonBuscarCliente() {
-		return botonConsultarPedido;
+		return idAltaPedido;
 	}
 
 	public JButton getBotonAltaCliente() {

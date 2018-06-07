@@ -7,8 +7,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import util.Constantes;
 import vista.paneles.Articulos;
 import vista.paneles.Clientes;
+import vista.paneles.Pedidos;
 
 import java.awt.Dimension;
 import java.awt.Cursor;
@@ -28,6 +31,10 @@ public class UI extends JFrame {
 	private JPanel contentPane;
 	private Articulos articulos;
 	private Clientes clientes;
+	private Pedidos pedidos;
+	private JButton botonArticulos;
+	private JButton botonClientes;
+	private JButton botonPedidos;
 
 	public UI() {
 		crearFrame();
@@ -37,6 +44,7 @@ public class UI extends JFrame {
 	private void crearPaneles() {
 		this.articulos = new Articulos();
 		this.clientes = new Clientes();
+		this.pedidos = new Pedidos();
 	}
 
 	private void crearFrame() {
@@ -58,10 +66,13 @@ public class UI extends JFrame {
 		contentPane.add(panelPrincipal, BorderLayout.CENTER);
 		panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.X_AXIS));
 
-		JButton botonArticulos = new JButton("Art\u00EDculos");
+		this.botonArticulos = new JButton("Art\u00EDculos");
 		botonArticulos.addActionListener(e -> {
 			panelPrincipal.removeAll();
 			panelPrincipal.add(this.articulos, BorderLayout.CENTER);
+			this.botonArticulos.setBackground(Constantes.botonMenuSeleccionado);
+			this.botonClientes.setBackground(Constantes.botonMenuNormal);
+			this.botonPedidos.setBackground(Constantes.botonMenuNormal);
 			contentPane.updateUI();
 		});
 		botonArticulos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -70,10 +81,13 @@ public class UI extends JFrame {
 		botonArticulos.setBorder(new EmptyBorder(5, 0, 5, 0));
 		panelSuperior.add(botonArticulos);
 
-		JButton botonClientes = new JButton("Clientes");
+		this.botonClientes = new JButton("Clientes");
 		botonClientes.addActionListener(e -> {
 			panelPrincipal.removeAll();
 			panelPrincipal.add(this.clientes, BorderLayout.CENTER);
+			this.botonArticulos.setBackground(Constantes.botonMenuNormal);
+			this.botonClientes.setBackground(Constantes.botonMenuSeleccionado);
+			this.botonPedidos.setBackground(Constantes.botonMenuNormal);
 			contentPane.updateUI();
 		});
 		botonClientes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -82,10 +96,13 @@ public class UI extends JFrame {
 		botonClientes.setBorder(new EmptyBorder(5, 0, 5, 0));
 		panelSuperior.add(botonClientes);
 
-		JButton botonPedidos = new JButton("Pedidos");
+		this.botonPedidos = new JButton("Pedidos");
 		botonPedidos.addActionListener(e -> {
 			panelPrincipal.removeAll();
-			panelPrincipal.add(new JLabel("Pedidos"), BorderLayout.CENTER);
+			panelPrincipal.add(this.pedidos, BorderLayout.CENTER);
+			this.botonArticulos.setBackground(Constantes.botonMenuNormal);
+			this.botonClientes.setBackground(Constantes.botonMenuNormal);
+			this.botonPedidos.setBackground(Constantes.botonMenuSeleccionado);
 			contentPane.updateUI();
 		});
 		botonPedidos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -222,7 +239,5 @@ public class UI extends JFrame {
 	public void limpiarCamposAltaArticulo() {
 		articulos.limpiarCamposAltaArticulo();
 	}
-	
-	
 
 }

@@ -162,7 +162,7 @@ public class Clientes extends JPanel {
 		mensajeAltaCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(mensajeAltaCliente, BorderLayout.NORTH);
 		
-		botonAltaCliente = new JButton("Alta");
+		botonAltaCliente = new JButton("Alta cliente");
 		panel.add(botonAltaCliente);
 		botonAltaCliente.setFocusPainted(false);
 		botonAltaCliente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -292,14 +292,14 @@ public class Clientes extends JPanel {
 		panel_1.add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(new GridLayout(0, 2, 5, 0));
 		
-		botonBuscarCliente = new JButton("Buscar");
+		botonBuscarCliente = new JButton("Buscar cliente");
 		panel_2.add(botonBuscarCliente);
 		botonBuscarCliente.setFocusPainted(false);
 		botonBuscarCliente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		botonBuscarCliente.setBackground(new Color(176, 196, 222));
 		botonBuscarCliente.setBorder(new EmptyBorder(10, 0, 10, 0));
 		
-		botonBorrarCliente = new JButton("Borrar Cliente");
+		botonBorrarCliente = new JButton("Borrar cliente");
 		botonBorrarCliente.setFocusPainted(false);
 		botonBorrarCliente.setBackground(new Color(176, 196, 222));
 		botonBorrarCliente.setBorder(new EmptyBorder(10, 0, 10, 0));
