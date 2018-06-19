@@ -273,8 +273,6 @@ public class Articulos extends JPanel {
 		precioBuscarArticulo.setDisabledTextColor(new Color(0, 0, 0));
 		precioBuscarArticulo.setFont(new Font("Monospaced", Font.BOLD, 11));
 		precioBuscarArticulo.setBackground(new Color(255, 255, 255));
-		precioBuscarArticulo.setEditable(false);
-		precioBuscarArticulo.setEnabled(false);
 		precioBuscarArticulo.setColumns(10);
 		precioBuscarArticulo.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panelPrecioBuscarArticulo.add(precioBuscarArticulo, BorderLayout.CENTER);
