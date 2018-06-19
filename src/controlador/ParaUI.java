@@ -2,11 +2,8 @@ package controlador;
 
 import controlador.acciones.AccionesArticulo;
 import controlador.acciones.AccionesCliente;
-import controlador.eventos.ActionAltaArticulo;
-import controlador.eventos.ActionAltaCliente;
-import controlador.eventos.ActionBorrarCliente;
-import controlador.eventos.ActionBuscarCliente;
 import logica.Logica;
+import modelo.data.Articulo;
 import modelo.data.Cliente;
 import vista.UI;
 
@@ -30,10 +27,12 @@ public class ParaUI extends UI {
 	}
 	
 	public void establecerEventos() {
-		getBotonAltaCliente().addActionListener(new ActionAltaCliente(this));
-		getBotonBuscarCliente().addActionListener(new ActionBuscarCliente(this));
-		getBotonAltaArticulo().addActionListener(new ActionAltaArticulo(this));
-		getBotonBorrarCliente().addActionListener(new ActionBorrarCliente(this));
+		getBotonAltaCliente().addActionListener(e -> darAltaCliente());
+		getBotonBuscarCliente().addActionListener(e -> buscarCliente());
+		getBotonBorrarCliente().addActionListener(e -> borrarCliente());
+		getBotonAltaArticulo().addActionListener(e -> darAltaArticulo());
+		getBotonBuscarArticulo().addActionListener(e -> buscarArticulo());
+		getBotonModificarPrecioArticulo().addActionListener(e -> modificarPrecio());
 	}
 
 	public void darAltaCliente() {
@@ -56,7 +55,7 @@ public class ParaUI extends UI {
 		return logica.borrarCliente(CIF);
 	}
 
-	public void borrar() {
+	public void borrarCliente() {
 		accionesCliente.borrar();
 	}
 	
@@ -70,6 +69,22 @@ public class ParaUI extends UI {
 
 	public void darAltaArticulo() {
 		accionesArticulo.darAlta();
+	}
+
+	public Articulo buscarArticulo(String nombre) {
+		return logica.buscarArticulo(nombre);
+	}
+
+	public boolean modificarPrecioArticulo(String nombreArticulo, float nuevoPrecio) {
+		return logica.modificarPrecioArticulo(nombreArticulo, nuevoPrecio);
+	}
+
+	public void buscarArticulo() {
+		accionesArticulo.buscarArticulo();
+	}
+
+	public void modificarPrecio() {
+		accionesArticulo.modificarPrecio();
 	}
 
 }

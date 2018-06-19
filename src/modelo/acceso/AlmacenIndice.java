@@ -8,7 +8,7 @@ public class AlmacenIndice<T, K> {
 	private String pathIndice;
 	private String pathDatos;
 	private TreeMap<K, Integer> indice;
-	DAO<Object> dao;
+	private DAO<Object> dao;
 
 	public AlmacenIndice(String pathIndice, String pathDatos) {
 		super();
@@ -16,7 +16,7 @@ public class AlmacenIndice<T, K> {
 		this.pathDatos = pathDatos;
 		assert validate();
 		this.indice = new TreeMap<>();
-		dao = new DAO<>();
+		this.dao = new DAO<>();
 		comprobarPath();
 	}
 
@@ -35,6 +35,7 @@ public class AlmacenIndice<T, K> {
 					leerIndice();
 				} else {
 					recargaIndice();
+					indice.toString();
 					dao.grabar(pathIndice, indice);
 				}
 
